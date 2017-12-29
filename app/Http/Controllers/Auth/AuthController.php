@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -63,11 +65,35 @@ class AuthController extends Controller
         ]);
 
         $user->role = 'user';
+        $user->registration_token = str_random(40);
         $user->remember_token = str_random(40);
 
         $user->save();
 
+        $url = route('confirmation', ['token' => $user->registration_token]);
+
+        Mail::send('emails/registration', compact('user', 'url'), function ($mail) use ($user) {
+            $mail->to($user->email, $user->name)->subject('Confirm your email');
+        });
+
         return $user;
+    }
+
+    /**
+    * Get confirmation token and puts the database fields in null
+    *
+    * @param  string $token
+    * @return \Illuminate\Http\Response
+    */
+    public function getConfirmation($token)
+    {
+        $user = User::where('registration_token', $token)->firstOrFail();
+        $user->registration_token = null;
+
+        $user->save();
+
+        return redirect()->route('login')
+            ->with('alert', 'Your email has been confirmed');
     }
 
     /**
@@ -88,5 +114,42 @@ class AuthController extends Controller
     public function loginPath()
     {
         return route('login');
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+        $user = $this->create($request->all());
+
+        return redirect()->route('login')
+            ->with('alert', 'Please confirm your email: ' . $user->email);
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function getCredentials(Request $request)
+    {
+        return [
+            'email' => $request->get('email'), 
+            'password' => $request->get('password'), 
+            'registration_token' => null
+        ];
     }
 }
