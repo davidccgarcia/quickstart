@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -48,3 +50,17 @@ Route::get('confirmation/{token}', [
     'uses' => 'Auth\AuthController@getConfirmation', 
     'as' => 'confirmation'
 ]);
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('account', function () {
+        return view('account');
+    });
+});
+
+Route::get('publish', function () {
+    return view('publish');
+});
+
+Route::post('publish', function (Request $request) {
+    return $request->all();
+});

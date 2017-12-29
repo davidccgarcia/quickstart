@@ -25,7 +25,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
                 @if (Auth::check())
-                    <li><a href="">Account</a></li>
+                    <li><a href="{{ url('account') }}">Account</a></li>
                 @endif
             </ul>
 
@@ -36,7 +36,7 @@
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            {{ Auth::user()->name }} - {{ Auth::user()->role }} <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('logout') }}">Logout</a></li>
