@@ -79,4 +79,14 @@ class AuthController extends Controller
     {
         return route('home');
     }
+
+    /**
+     * Get the path to the login route.
+     *
+     * @return string
+     */
+    public function loginPath()
+    {
+        return route('login');
+    }
 }

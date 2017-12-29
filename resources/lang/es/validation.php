@@ -58,7 +58,7 @@ return [
     'not_in'               => 'The selected :attribute is invalid.',
     'numeric'              => 'The :attribute must be a number.',
     'regex'                => 'The :attribute format is invalid.',
-    'required'             => 'The :attribute field is required.',
+    'required'             => 'El campo :attribute es requerido.',
     'required_if'          => 'The :attribute field is required when :other is :value.',
     'required_unless'      => 'The :attribute field is required unless :other is in :values.',
     'required_with'        => 'The :attribute field is required when :values is present.',
@@ -106,10 +106,8 @@ return [
     */
 
     'attributes' => [
-        'email' => 'E-Mail', 
-        'password' => 'Password', 
-        'name' => 'Name', 
-        'password_confirmation' => 'Confirm your password'
+        'email' => 'Correo Electrónico', 
+        'password' => 'Contraseña'
     ],
 
 ];
