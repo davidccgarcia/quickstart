@@ -32,7 +32,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'getLogout']);
+        $this->middleware('guest', ['except' => 'getLogout', 'except' => 'getConfirmation']);
     }
 
     /**
@@ -117,28 +117,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle a registration request for the application.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function postRegister(Request $request)
-    {
-        $validator = $this->validator($request->all());
-
-        if ($validator->fails()) {
-            $this->throwValidationException(
-                $request, $validator
-            );
-        }
-
-        $user = $this->create($request->all());
-
-        return redirect()->route('login')
-            ->with('alert', 'Please confirm your email: ' . $user->email);
-    }
-
-    /**
      * Get the needed authorization credentials from the request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -149,7 +127,6 @@ class AuthController extends Controller
         return [
             'email' => $request->get('email'), 
             'password' => $request->get('password'), 
-            'registration_token' => null
         ];
     }
 }
