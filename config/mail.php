@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'log'),
+    'driver' => env('MAIL_DRIVER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'noreply@styde.net', 'name' => 'styde.net'],
+    'from' => ['address' => 'from@example.com', 'name' => 'Example'],
 
     /*
     |--------------------------------------------------------------------------
