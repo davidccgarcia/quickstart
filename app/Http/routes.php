@@ -56,15 +56,8 @@ Route::group(['middleware' => 'auth'], function () {
         return view('account');
     });
 
-    Route::group(['middleware' => 'role:admin'], function () {
-        Route::get('posts', function () {
-            return view('admin.posts');
-        });
-    });
-
-    Route::get('settings', function () {
-        return view('admin.settings');
-    });
+    Route::get('account/password', 'AccountController@getPassword');
+    Route::post('account/password', 'AccountController@postPassword');
 
     Route::group(['middleware' => 'verified'], function () {
         Route::get('publish', function () {
@@ -75,5 +68,16 @@ Route::group(['middleware' => 'auth'], function () {
             return $request->all();
         });
     });
+    
+    Route::group(['middleware' => 'role:admin'], function () {
+        Route::get('posts', function () {
+            return view('admin.posts');
+        });
+    });
+
+    Route::get('settings', function () {
+        return view('admin.settings');
+    });
+
 });
 
