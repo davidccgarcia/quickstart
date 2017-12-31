@@ -20,7 +20,10 @@ class ChangePasswordTest extends TestCase
             ->type('newpassword', 'password_confirmation')
             ->press('Change password')
             ->seePageIs('account')
-            ->see('Your password has been changed');
+            ->see('Your password has been changed')
+            ->seeInDatabase('users', [
+                'password' => $user->password
+            ]);
 
         $this->assertTrue(
             Hash::check('newpassword', $user->password), 
