@@ -18,6 +18,7 @@ class EditProfileTest extends TestCase
             ->visit('account')
             ->click('Edit profile')
             ->seePageIs('account/edit-profile')
+            ->seeInField('name', 'Cristhian García')
             ->see('Edit Profile')
             ->type('Mariano Di Vaio', 'name')
             ->press('Update profile')

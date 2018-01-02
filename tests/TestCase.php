@@ -37,4 +37,40 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
             'role' => $role, 
         ]);
     }
+
+    public function seeInField($selector, $expected)
+    {
+        $this->assertSame(
+            $expected, 
+            $this->getInputOrTextAreaValue($selector), 
+            "The input [$selector] has not the expected value [$expected]."
+        );
+
+        return $this;
+    }
+
+    public function getInputOrTextAreaValue($selector)
+    {
+        // Get the HTML field
+        $field = $this->filterByNameOrId($selector);
+
+        if ($field->count() == 0) {
+            throw new \Exception("There are no elements wit the name o ID [$selector]");
+        }
+
+        // Get element type
+        $element = $field->nodeName();
+
+        if ($element == 'input') {
+            // Get the current value
+            return $field->attr('value');
+        }
+
+        if ($element == 'textarea') {
+            // Get the current value
+            return $field->text();
+        }
+
+        throw new \Exception("[$selector] is neither an input nor a textarea");
+    }
 }

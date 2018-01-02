@@ -45,9 +45,11 @@ class AccountController extends Controller
     * Edit profile view
     *
     */
-    public function editProfile()
+    public function editProfile(Request $request)
     {
-        return view('account.edit-profile');
+        $user = $request->user();
+
+        return view('account.edit-profile', compact('user'));
     }
 
     /**
