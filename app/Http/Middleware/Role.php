@@ -8,17 +8,6 @@ use Illuminate\Support\Facades\Auth;
 class Role
 {
     /**
-    * User hierarchy
-    *
-    * @var array
-    */
-    protected $hierarchy = [
-        'admin' => 3, 
-        'editor' => 2, 
-        'user' => 1
-    ];
-
-    /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -27,9 +16,9 @@ class Role
      */
     public function handle($request, Closure $next, $role)
     {
-        $user = Auth::user();
+        $user = auth()->user();
 
-        if ($this->hierarchy[$role] > $this->hierarchy[$user->role]) {
+        if (! Access::check($user->role, $role)) {
             abort(404);
         }
 

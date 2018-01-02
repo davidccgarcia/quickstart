@@ -27,6 +27,9 @@
                 @if (Auth::check())
                     <li><a href="{{ url('account') }}">Account</a></li>
                 @endif
+                @if (Auth::check() && Access::check(Auth::user()->role, 'editor'))
+                    <li><a href="{{ url('publish') }}">Publish</a></li>
+                @endif
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
