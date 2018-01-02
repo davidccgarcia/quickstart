@@ -28,7 +28,7 @@
                                         <td>{{ $post->description }}</td>
                                         <td>{{ $post->user->name }}</td>
                                         <td>
-                                            @can('updated-post', $post)
+                                            @can('update', $post)
                                                 <a href="{{ url("edit-post/$post->id") }}" class="btn btn-primary">
                                                     Edit <i class="glyphicon glyphicon-pencil"></i>
                                                 </a>

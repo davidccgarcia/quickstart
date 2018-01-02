@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Post' => 'App\Policies\PostPolicy', 
     ];
 
     /**
@@ -25,9 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         $this->registerPolicies($gate);
-
-        $gate->define('updated-post', function ($user, $post) {
-            return $user->id == $post->user_id;
-        });
+        $gate->define('before', 'App\Policies\PostPolicy@before');
     }
 }

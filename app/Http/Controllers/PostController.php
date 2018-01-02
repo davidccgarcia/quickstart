@@ -22,7 +22,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        if (! Gate::allows('updated-post', $post)) {
+        if (Gate::denies('update', $post)) {
             abort(403);
         }
 
