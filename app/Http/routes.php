@@ -56,6 +56,9 @@ Route::group(['middleware' => 'auth'], function () {
         return view('account');
     });
 
+    Route::get('account/edit-profile', 'AccountController@editProfile');
+    Route::put('account/edit-profile/', 'AccountController@updateProfile');
+
     Route::get('account/password', 'AccountController@getPassword');
     Route::post('account/password', 'AccountController@postPassword');
 

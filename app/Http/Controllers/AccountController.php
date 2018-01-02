@@ -40,4 +40,32 @@ class AccountController extends Controller
         return redirect('account')
             ->with('alert', 'Your password has been changed');
     }
+
+    /**
+    * Edit profile view
+    *
+    */
+    public function editProfile()
+    {
+        return view('account.edit-profile');
+    }
+
+    /**
+    * Update profile
+    *
+    */
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        $this->validate($request, [
+            'name' => 'required|min:2'
+        ]);
+
+        $user->fill($request->only(['name']));
+        $user->save();
+
+        return redirect('account')
+            ->with('alert', 'Your profile has been updated');
+    }
 }
