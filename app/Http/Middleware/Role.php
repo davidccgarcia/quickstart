@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\AccessHandler as Access;
 use Illuminate\Support\Facades\Auth;
 
 class Role

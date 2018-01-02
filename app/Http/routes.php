@@ -62,16 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('account/password', 'AccountController@getPassword');
     Route::post('account/password', 'AccountController@postPassword');
 
-    Route::get('edit-post/{id}', function ($id) {
-
-        $post = App\Post::findOrFail($id);
-
-        if (! Gate::allows('updated-post', $post)) {
-            abort(403);
-        }
-
-        return $post->title;
-    });
+    Route::get('posts', 'PostController@index');
+    Route::get('edit-post/{id}', 'PostController@editPost');
 
     Route::group(['middleware' => 'verified'], function () {
         Route::get('publish', function () {
@@ -80,12 +72,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('publish', function (Request $request) {
             return $request->all();
-        });
-    });
-    
-    Route::group(['middleware' => 'role:admin'], function () {
-        Route::get('posts', function () {
-            return view('admin.posts');
         });
     });
 
